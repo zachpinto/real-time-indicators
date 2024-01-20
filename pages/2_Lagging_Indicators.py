@@ -4,6 +4,7 @@ import plotly.express as px
 import psycopg2
 from dotenv import load_dotenv
 import os
+import requests
 
 
 # Load environment variables
@@ -13,6 +14,7 @@ DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
 DB_PASS = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
+
 
 # Function to connect to the database
 def connect_to_db():
@@ -55,9 +57,20 @@ indicator_titles = {
     "bank_prime_loan": "Bank Prime Loan Rate (Updated Daily)",
 }
 
+report_links = {
+    "avg_weeks_unemployment": "https://www.bls.gov/ces/",
+    "commercial_industrial_loans": "https://www.federalreserve.gov/releases/h8/",
+    "cpi_all": "https://www.bls.gov/cpi/",
+    "unit_labor_costs_all": "https://www.bls.gov/productivity/home.htm",
+    "manufacture_inventory_sales_ratio": "https://www.census.gov/mtis/index.html",
+    "consumer_credit_pi": "https://www.federalreserve.gov/releases/z1/i",
+    "bank_prime_loan": "https://www.federalreserve.gov/releases/h15/",
+}
+
 for indicator in indicators:
     df = get_indicator_data(indicator)
-    title = indicator_titles.get(indicator, "Indicator")  # Default title if not found
+    title = indicator_titles.get(indicator, "Indicator")
+    report_url = report_links.get(indicator, "#")  # Fallback URL if none is provided
 
     if not df.empty:
         # Assuming the DataFrame is sorted by date, get the most recent value
@@ -65,6 +78,8 @@ for indicator in indicators:
         most_recent_date = df.iloc[-1]['date']  # Get the last row's date
         st.subheader(f"{title}")
         st.markdown(f"*Most recent value: {most_recent_value} on {most_recent_date}*")
+        # Display hyperlink above the chart
+        st.markdown(f"[Read the entire report here]({report_url})", unsafe_allow_html=True)
     else:
         st.subheader(f"{title} (No data available)")
 
@@ -77,17 +92,8 @@ for indicator in indicators:
         yaxis_title='Value'
     )
 
-    # Create two columns for the chart and additional content
-    col1, col2 = st.columns([1, 1])  # Adjust the ratio as needed
-
-    with col1:
-        # Display the chart in the first column
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        # Additional content (like article titles) can go here
-        st.write("Articles or additional information here")
+    # Display the chart in full width
+    st.plotly_chart(fig, use_container_width=True)
 
     # Add a separator
     st.write("---")
-
