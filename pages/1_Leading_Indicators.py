@@ -4,6 +4,7 @@ import plotly.express as px
 import psycopg2
 from dotenv import load_dotenv
 import os
+import requests
 
 
 # Load environment variables
@@ -13,6 +14,7 @@ DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
 DB_PASS = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
+
 
 # Function to connect to the database
 def connect_to_db():
@@ -57,9 +59,21 @@ indicator_titles = {
     "avg_consumer_expectations": "Average Consumer Expectations (Updated Monthly)"
 }
 
+report_links = {
+    "avg_weekly_hours_manufacture": "https://www.bls.gov/ces/",
+    "avg_weekly_initial_jobless_claims": "https://www.dol.gov/ui/data.pdf",
+    "manufacture_new_orders_consumer": "https://www.census.gov/manufacturing/m3/index.html",
+    "manufacture_new_order_capital": "http://www.census.gov/indicator/www/m3/",
+    "building_permits": "https://www.census.gov/construction/nrc/index.html",
+    "sp_500_index": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/#overview",
+    "interest_rate_spread": "https://fred.stlouisfed.org/series/T10YFF",
+    "avg_consumer_expectations": "https://data.sca.isr.umich.edu/reports.php"
+}
+
 for indicator in indicators:
     df = get_indicator_data(indicator)
-    title = indicator_titles.get(indicator, "Indicator")  # Default title if not found
+    title = indicator_titles.get(indicator, "Indicator")
+    report_url = report_links.get(indicator, "#")  # Fallback URL if none is provided
 
     if not df.empty:
         # Assuming the DataFrame is sorted by date, get the most recent value
@@ -67,6 +81,8 @@ for indicator in indicators:
         most_recent_date = df.iloc[-1]['date']  # Get the last row's date
         st.subheader(f"{title}")
         st.markdown(f"*Most recent value: {most_recent_value} on {most_recent_date}*")
+        # Display hyperlink above the chart
+        st.markdown(f"[Read the entire report here]({report_url})", unsafe_allow_html=True)
     else:
         st.subheader(f"{title} (No data available)")
 
@@ -79,17 +95,8 @@ for indicator in indicators:
         yaxis_title='Value'
     )
 
-    # Create two columns for the chart and additional content
-    col1, col2 = st.columns([1, 1])  # Adjust the ratio as needed
-
-    with col1:
-        # Display the chart in the first column
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        # Additional content (like article titles) can go here
-        st.write("Articles or additional information here")
+    # Display the chart in full width
+    st.plotly_chart(fig, use_container_width=True)
 
     # Add a separator
     st.write("---")
-
