@@ -22,7 +22,7 @@ csv_file_path = '/Users/pintoza/Desktop/dev/analytics-engineering/real-time-indi
 data_df = pd.read_csv(csv_file_path)
 
 # Table name in the database
-table_name = 'avg_consumer_expectations'
+table_name = 'avg_weekly_hours_manufacture'
 
 # Load data from DataFrame to PostgreSQL table
 data_df.to_sql(table_name, engine, if_exists='replace', index=False)
