@@ -4,7 +4,6 @@ import plotly.express as px
 import psycopg2
 from dotenv import load_dotenv
 import os
-import requests
 
 
 # Load environment variables
