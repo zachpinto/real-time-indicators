@@ -8,7 +8,6 @@ Demo:
 - [Average Weekly Hours of All Employees, Manufacturing](https://fred.stlouisfed.org/series/AWHAEMAN)
 - [Average Weekly Initial Jobless Claims](https://fred.stlouisfed.org/series/ICSA)
 - [Manufacturers' New Orders: Consumer Goods](https://fred.stlouisfed.org/series/ACOGNO)
-- [Vendor Performance: Slower Deliveries Diffusion Index](https://fred.stlouisfed.org/series/M06006USM156NNBR)
 - [Manufacturers' New Orders: Non-defense Capital Goods](https://fred.stlouisfed.org/series/ANDENO)
 - [Building Permits: New Privately Owned Housing Units](https://fred.stlouisfed.org/series/PERMIT)
 - [S&P 500 Stock Price Index](https://fred.stlouisfed.org/series/SP500)
