@@ -107,10 +107,10 @@ def transform_value_for_plotting(value, format_type):
 
 for indicator in indicators:
     df = get_indicator_data(indicator)
-    format_type = formatting_rules[indicator]
+    format_type = formatting_rules.get(indicator, "keep_same")
 
     df['plot_value'] = df['value'].apply(lambda x: transform_value_for_plotting(x, format_type))
-    df['display_value'] = df['value'].apply(lambda x: format_value(x, indicator))
+    df['display_value'] = df['value'].apply(lambda x: format_value(x, format_type))  # Pass format_type instead of indicator
 
     title = indicator_titles.get(indicator, "Indicator")
     report_url = report_links.get(indicator, "#")
@@ -118,7 +118,7 @@ for indicator in indicators:
     if not df.empty:
         most_recent_value = df.iloc[-1]['display_value']
         most_recent_date = df.iloc[-1]['date']
-        y_axis_label = get_y_axis_label(format_type)  # Now correctly using format_type
+        y_axis_label = get_y_axis_label(format_type)
 
         st.subheader(f"{title}")
         st.markdown(f"*Most recent value: {most_recent_value} on {most_recent_date}*")
@@ -130,5 +130,5 @@ for indicator in indicators:
     else:
         st.subheader(f"{title} (No data available)")
 
-    st.write("---")
+st.write("---")
 
