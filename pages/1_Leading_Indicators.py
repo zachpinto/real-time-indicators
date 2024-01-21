@@ -5,31 +5,15 @@ import os
 
 # Function to retrieve data for a specific indicator
 def get_indicator_data(indicator_name):
-    # Define the path to the processed data directory
     processed_data_dir = '/Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/data/processed/leading_indicators'
-
-    # Build the file path
     file_path = os.path.join(processed_data_dir, f'{indicator_name}.csv')
-
-    # Read data from the corresponding CSV file
     if os.path.exists(file_path):
-        df = pd.read_csv(file_path)
-
-        # Debugging: print the DataFrame columns
-        print(f"DataFrame columns for {indicator_name}: {df.columns}")
-
-        return df
+        return pd.read_csv(file_path)
     else:
-        # Return an empty DataFrame if file does not exist
         return pd.DataFrame()
 
-# Page configuration
 st.set_page_config(page_title="Leading Economic Indicators", layout="wide")
-
-# Page Title
 st.title("Leading Economic Indicators")
-
-# Line separator
 st.markdown("---")
 
 # For each leading indicator
@@ -119,18 +103,17 @@ for indicator in indicators:
     df = get_indicator_data(indicator)
     format_type = formatting_rules.get(indicator, "keep_same")
 
-    df['plot_value'] = df['value'].apply(lambda x: transform_value_for_plotting(x, format_type))
-    df['display_value'] = df['value'].apply(lambda x: format_value(x, format_type))
-
-    title = indicator_titles.get(indicator, "Indicator")
-    report_url = report_links.get(indicator, "#")
-
     if not df.empty:
+        df['plot_value'] = df['value'].apply(lambda x: transform_value_for_plotting(x, format_type))
+        df['display_value'] = df['value'].apply(lambda x: format_value(x, format_type))
+
+        title = indicator_titles[indicator]
+        report_url = report_links[indicator]
         most_recent_value = df.iloc[-1]['display_value']
         most_recent_date = df.iloc[-1]['date']
         y_axis_label = get_y_axis_label(format_type)
 
-        st.subheader(f"{title}")
+        st.subheader(title)
         st.markdown(f"*Most recent value: {most_recent_value} on {most_recent_date}*")
         st.markdown(f"[Read the entire report here]({report_url})", unsafe_allow_html=True)
 
@@ -140,4 +123,4 @@ for indicator in indicators:
     else:
         st.subheader(f"{title} (No data available)")
 
-    st.write("---")
+st.write("---")
