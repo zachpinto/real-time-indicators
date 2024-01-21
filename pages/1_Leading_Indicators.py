@@ -69,33 +69,85 @@ report_links = {
     "avg_consumer_expectations": "https://data.sca.isr.umich.edu/reports.php"
 }
 
+formatting_rules = {
+    "avg_weekly_hours_manufacture": "keep_same",
+    "avg_weekly_initial_jobless_claims": "to_thousand",
+    "manufacture_new_orders_consumer": "millions_to_billion_with_dollar",
+    "manufacture_new_order_capital": "millions_to_billion_with_dollar",
+    "building_permits": "thousands_to_million",
+    "sp_500_index": "keep_same",
+    "interest_rate_spread": "to_percentage",
+    "avg_consumer_expectations": "to_percentage"
+}
+
+def format_value(value, format_type):
+    if format_type == 'to_million':
+        return f"{value / 1000:.2f}M"
+    elif format_type == 'millions_to_billion_with_dollar':
+        return f"${value / 1000:.2f}B"
+    elif format_type == 'thousands_to_million':
+        return f"{value / 1000:.2f}M"  # Format as millions with 'M'
+    elif format_type == 'to_percentage':
+        return f"{value}%"
+    elif format_type == 'to_thousand':
+        return f"{value / 1000:.0f}K"
+    elif format_type == 'keep_same':
+        return value
+    else:
+        return value
+
+def get_y_axis_label(format_type):
+    if format_type == 'to_million':
+        return 'Value (Millions)'
+    elif format_type == 'millions_to_billion_with_dollar':
+        return 'Value (Billions)'
+    elif format_type == 'thousands_to_million':
+        return 'Value (Millions)'
+    elif format_type == 'to_percentage':
+        return 'Percentage (%)'
+    elif format_type == 'to_thousand':
+        return 'Value (Thousands)'
+    else:
+        return 'Value'
+
+def transform_value_for_plotting(value, format_type):
+    if format_type == 'to_million':
+        return value / 1000  # Convert to millions
+    elif format_type == 'millions_to_billion_with_dollar':
+        return value / 1000  # Convert to billions
+    elif format_type == 'thousands_to_million':
+        return value / 1000  # Convert to millions for plotting
+    elif format_type == 'to_percentage':
+        return value  # Keep as is, since it's already a percentage
+    elif format_type == 'to_thousand':
+        return value / 1000  # Convert to thousands for plotting
+    else:
+        return value  # Default, no transformation
+
+
 for indicator in indicators:
     df = get_indicator_data(indicator)
+    format_type = formatting_rules.get(indicator, "keep_same")
+
+    df['plot_value'] = df['value'].apply(lambda x: transform_value_for_plotting(x, format_type))
+    df['display_value'] = df['value'].apply(lambda x: format_value(x, format_type))
+
     title = indicator_titles.get(indicator, "Indicator")
-    report_url = report_links.get(indicator, "#")  # Fallback URL if none is provided
+    report_url = report_links.get(indicator, "#")
 
     if not df.empty:
-        # Assuming the DataFrame is sorted by date, get the most recent value
-        most_recent_value = df.iloc[-1]['value']  # Get the last row's value
-        most_recent_date = df.iloc[-1]['date']  # Get the last row's date
+        most_recent_value = df.iloc[-1]['display_value']
+        most_recent_date = df.iloc[-1]['date']
+        y_axis_label = get_y_axis_label(format_type)
+
         st.subheader(f"{title}")
         st.markdown(f"*Most recent value: {most_recent_value} on {most_recent_date}*")
-        # Display hyperlink above the chart
         st.markdown(f"[Read the entire report here]({report_url})", unsafe_allow_html=True)
+
+        fig = px.line(df, x='date', y='plot_value', title=title)
+        fig.update_layout(xaxis_title='Date', yaxis_title=y_axis_label)
+        st.plotly_chart(fig, use_container_width=True)
     else:
         st.subheader(f"{title} (No data available)")
 
-    # Create the line chart
-    fig = px.line(df, x='date', y='value', title=title)
-
-    # Update the labels
-    fig.update_layout(
-        xaxis_title='Date',
-        yaxis_title='Value'
-    )
-
-    # Display the chart in full width
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Add a separator
     st.write("---")
