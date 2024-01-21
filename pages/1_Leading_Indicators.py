@@ -14,6 +14,10 @@ def get_indicator_data(indicator_name):
     # Read data from the corresponding CSV file
     if os.path.exists(file_path):
         df = pd.read_csv(file_path)
+
+        # Debugging: print the DataFrame columns
+        print(f"DataFrame columns for {indicator_name}: {df.columns}")
+
         return df
     else:
         # Return an empty DataFrame if file does not exist
