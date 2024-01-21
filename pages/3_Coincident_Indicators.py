@@ -60,33 +60,94 @@ report_links = {
     "total_employees_nonfarm": "https://www.bls.gov/ces/"
 }
 
+formatting_rules = {
+    "industrial_prod_index": "keep_same",
+    "manufacture_trade_sales": "manufacture_trade_sales",
+    "pi_exclude_transfers": "to_trillion",
+    "total_employees_nonfarm": "to_thousand",
+}
+
+def format_value(value, format_type):
+    if format_type == 'to_million':
+        return f"{value / 1000:.2f}M"
+    elif format_type == 'millions_to_billion_with_dollar':
+        return f"${value / 1000:.2f}B"
+    elif format_type == 'thousands_to_million':
+        return f"{value / 1000:.2f}M"  # Format as millions with 'M'
+    elif format_type == 'to_percentage':
+        return f"{value}%"
+    elif indicator == 'total_employees_nonfarm':
+        return f"{value / 1000:.0f}K"
+    elif format_type == 'keep_same':
+        return value
+    if indicator == 'manufacture_trade_sales':
+        return f"${value / 1000000:.2f}T"  # Assuming raw data is in billions, format as trillions
+    elif formatting_rules[indicator] == 'to_trillion':
+        return f"${value / 1000:.2f}T"
+    else:
+        return value
+
+def get_y_axis_label(format_type):
+    if format_type == 'to_million':
+        return 'Value (Millions)'
+    elif format_type == 'millions_to_billion_with_dollar':
+        return 'Value (Billions)'
+    elif format_type == 'thousands_to_million':
+        return 'Value (Millions)'
+    elif format_type == 'to_percentage':
+        return 'Percentage (%)'
+    elif indicator == 'total_employees_nonfarm':
+        return 'Value (Thousands)'
+    elif indicator == 'total_employees_nonfarm':
+        return f"{value / 1000:.0f}K"
+    elif format_type == 'to_trillion':
+        return 'Value (Trillions)'
+    elif indicator == 'manufacture_trade_sales':
+        return 'Value (Trillions)'
+    else:
+        return 'Value'
+
+def transform_value_for_plotting(value, format_type):
+    if format_type == 'to_million':
+        return value / 1000  # Convert to millions
+    elif format_type == 'millions_to_billion_with_dollar':
+        return value / 1000  # Convert to billions
+    elif format_type == 'thousands_to_million':
+        return value / 1000  # Convert to millions for plotting
+    elif format_type == 'to_percentage':
+        return value  # Keep as is, since it's already a percentage
+    elif indicator == 'manufacture_trade_sales':
+        return value / 1000000  # Assuming raw data is in billions, convert to trillions
+    elif formatting_rules[indicator] == 'to_trillion':
+        return value / 1000  # Convert millions to trillions
+    # Convert millions to trillions
+    else:
+        return value
+
+
 for indicator in indicators:
     df = get_indicator_data(indicator)
+    format_type = formatting_rules[indicator]
+
+    df['plot_value'] = df['value'].apply(lambda x: transform_value_for_plotting(x, format_type))
+    df['display_value'] = df['value'].apply(lambda x: format_value(x, indicator))
+
     title = indicator_titles.get(indicator, "Indicator")
-    report_url = report_links.get(indicator, "#")  # Fallback URL if none is provided
+    report_url = report_links.get(indicator, "#")
 
     if not df.empty:
-        # Assuming the DataFrame is sorted by date, get the most recent value
-        most_recent_value = df.iloc[-1]['value']  # Get the last row's value
-        most_recent_date = df.iloc[-1]['date']  # Get the last row's date
+        most_recent_value = df.iloc[-1]['display_value']
+        most_recent_date = df.iloc[-1]['date']
+        y_axis_label = get_y_axis_label(format_type)  # Now correctly using format_type
+
         st.subheader(f"{title}")
         st.markdown(f"*Most recent value: {most_recent_value} on {most_recent_date}*")
-        # Display hyperlink above the chart
         st.markdown(f"[Read the entire report here]({report_url})", unsafe_allow_html=True)
+
+        fig = px.line(df, x='date', y='plot_value', title=title)
+        fig.update_layout(xaxis_title='Date', yaxis_title=y_axis_label)
+        st.plotly_chart(fig, use_container_width=True)
     else:
         st.subheader(f"{title} (No data available)")
 
-    # Create the line chart
-    fig = px.line(df, x='date', y='value', title=title)
-
-    # Update the labels
-    fig.update_layout(
-        xaxis_title='Date',
-        yaxis_title='Value'
-    )
-
-    # Display the chart in full width
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Add a separator
     st.write("---")
