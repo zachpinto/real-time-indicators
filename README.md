@@ -1,4 +1,4 @@
-Title
+Real-Time Economic Indicator Dashboard
 ==============================
 
 Demo: 
@@ -28,56 +28,76 @@ Demo:
 - [Manufacturing and Trade Industries Sales](https://fred.stlouisfed.org/series/CMRMTSPL)
 
 ## Introduction
-- **Background**:
-    - Test
-- **Objectives**:
-    - Test
-- **Research Questions**:
-    - Test
+### Background
+- This project focuses on building an analytics engineering solution to visualize leading, lagging, and coincident economic indicators. The primary goal is to provide real-time economic data and report updates from a list of economic indicators as they are released. All indicators are updated daily, weekly, monthly or quarterly, depending on the frequency of the data source.
+### Objectives
+- To create a user-friendly platform that displays up-to-date economic indicators.
+- To assist users in making informed decisions by providing historical and current data visualizations.
+- To integrate real-time news feeds that relate to the displayed economic indicators.
 
-## Data 
-- **Data Sources**:
-    - Test
-- **Data Attributes**:
-    - Test
+### Research Questions
+- How do various economic indicators evolve over time?
+- What are the relationships among different economic indicators?
+- How does the latest news correlate with changes in these indicators?
 
-## Methodology
-- **Data Processing**:
-    - Test
-- **Geospatial Analysis**:
-    - Test
-- **Statistical Analysis**:
-    - Test
-- **User Interface**:
-    - Test
+## Data
 
-## Analysis
-- **Descriptive Analysis**:
-    - Test
-- **Proximity Analysis**:
-    - Test
-- **Correlation Analysis**:
-    - Test
+### Data Sources
+- The data is sourced from multiple reliable financial and economic databases, including but not limited to:
+  - Federal Reserve Economic Data (FRED)
+  - U.S. Bureau of Labor Statistics
+  - U.S. Census Bureau
+- Real-time news articles are fetched using news feed APIs from established news outlets.
 
-## Results
-- **Findings**:
-    - Test
-- **Visualizations**:
-    - Test
+### Data Attributes
+- Economic indicators include, but are not limited to:
+  - Total nonfarm payrolls
+  - Unemployment rate
+  - Inflation rate
+  - Consumer Price Index (CPI)
+  - Gross Domestic Product (GDP)
+- Each dataset includes attributes such as date, numerical values, and relevant descriptors.
 
-## Discussion
-- **Interpretation**:
-    - Test
-- **Limitations**:
-    - Test
-- **Future Work**:
-    - Test
+## Architecture and Technologies
 
-## Appendix
-- **Technical Details**:
-    - Test
-- **References**:
-    - Test
+### Overview
+- This project employs a robust data pipeline that extracts, processes, and loads data into a PostgreSQL database, ensuring updated and clean data is always available.
+
+### Technologies
+- **Data Extraction and Loading**:
+  - Python scripts for automated data extraction and loading.
+  - Cron jobs for scheduling daily updates.
+- **Database**:
+  - PostgreSQL for data storage.
+- **Data Visualization**:
+  - Plotly for creating interactive data visualizations.
+- **Web Application**:
+  - Streamlit for building the interactive web application.
+- **Deployment**:
+  - GitHub for version control and deployment via Streamlit.
+
+## Installation and Usage
+
+### Prerequisites
+- Python 3.x
+- PostgreSQL
+- Access to economic data sources and news API.
+
+### Setup
+- Instructions on setting up the database, environment variables, and running the Python scripts.
+
+### Running the Application
+- Steps to start the Streamlit server and access the web application.
+
+## Contributions and Acknowledgements
+
+- Details on how others can contribute to the project.
+- Acknowledgements for any third-party resources or contributors.
+
+## License
+
+- Information about the project's license.
+
 
 Project Organization
 ------------
@@ -86,14 +106,11 @@ Project Organization
     ├── Makefile           <- Makefile with commands like `make data` or `make train`
     ├── README.md          <- The top-level README for developers using this project.
     ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
     │
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
     │
     ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
     │                         the creator's initials, and a short `-` delimited description, e.g.
@@ -101,8 +118,6 @@ Project Organization
     │
     ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
     │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
     │
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
@@ -114,16 +129,7 @@ Project Organization
     │   ├── data           <- Scripts to download or generate data
     │   │   └── make_dataset.py
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
     │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
