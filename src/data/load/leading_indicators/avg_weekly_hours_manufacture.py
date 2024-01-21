@@ -16,7 +16,7 @@ db_name = os.getenv('DB_NAME')
 engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
 
 # Path to your CSV file
-csv_file_path = '/Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/data/processed/leading_indicators/avg_consumer_expectations.csv'
+csv_file_path = '/Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/data/processed/leading_indicators/avg_weekly_hours_manufacture.csv'
 
 # Load data from CSV file into DataFrame
 data_df = pd.read_csv(csv_file_path)
