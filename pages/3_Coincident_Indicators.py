@@ -65,7 +65,7 @@ def format_value(value, format_type):
     elif indicator == 'total_employees_nonfarm':
         return f"{value / 1000:.2f}M"
     elif format_type == 'keep_same':
-        return value
+        return f"{value :.2f}"
     if indicator == 'manufacture_trade_sales':
         return f"${value / 1000000:.2f}T"  # Assuming raw data is in billions, format as trillions
     elif formatting_rules[indicator] == 'to_trillion':
