@@ -1,7 +1,7 @@
 Real-Time Economic Indicator Dashboard
 ==============================
 
-Demo: 
+Demo: https://pintoza-real-time-indicators-home-slo8fp.streamlit.app/
 
 ## Indicators:
 ### Leading Indicators
