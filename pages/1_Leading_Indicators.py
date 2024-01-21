@@ -103,12 +103,13 @@ for indicator in indicators:
     df = get_indicator_data(indicator)
     format_type = formatting_rules.get(indicator, "keep_same")
 
+    title = indicator_titles[indicator]  # Moved outside of the if statement
+    report_url = report_links[indicator]  # Moved outside of the if statement
+
     if not df.empty:
         df['plot_value'] = df['value'].apply(lambda x: transform_value_for_plotting(x, format_type))
         df['display_value'] = df['value'].apply(lambda x: format_value(x, format_type))
 
-        title = indicator_titles[indicator]
-        report_url = report_links[indicator]
         most_recent_value = df.iloc[-1]['display_value']
         most_recent_date = df.iloc[-1]['date']
         y_axis_label = get_y_axis_label(format_type)
