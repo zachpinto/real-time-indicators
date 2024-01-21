@@ -5,10 +5,13 @@ import os
 
 # Function to retrieve data for a specific indicator
 def get_indicator_data(indicator_name):
-    processed_data_dir = '/Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/data/processed/leading_indicators'
+    processed_data_dir = 'data/processed/leading_indicators'
     file_path = os.path.join(processed_data_dir, f'{indicator_name}.csv')
     if os.path.exists(file_path):
-        return pd.read_csv(file_path)
+        df = pd.read_csv(file_path)
+        st.write(f"Data for {indicator_name}:")  # Debugging
+        st.dataframe(df.head())  # Debugging
+        return df
     else:
         return pd.DataFrame()
 

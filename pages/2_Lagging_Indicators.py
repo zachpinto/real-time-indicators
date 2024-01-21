@@ -7,7 +7,7 @@ import os
 # Function to retrieve data for a specific indicator
 def get_indicator_data(indicator_name):
     # Define the path to the processed data directory
-    processed_data_dir = '/Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/data/processed/lagging_indicators'
+    processed_data_dir = 'data/processed/lagging_indicators'
 
     # Build the file path
     file_path = os.path.join(processed_data_dir, f'{indicator_name}.csv')
