@@ -28,60 +28,43 @@ Demo: https://pintoza-real-time-indicators-home-slo8fp.streamlit.app/
 - [Manufacturing and Trade Industries Sales](https://fred.stlouisfed.org/series/CMRMTSPL)
 
 ## Introduction
+
 ### Background
-- This project focuses on building an analytics engineering solution to visualize leading, lagging, and coincident economic indicators. The primary goal is to provide real-time economic data and report updates from a list of economic indicators as they are released. All indicators are updated daily, weekly, monthly or quarterly, depending on the frequency of the data source.
+- This project creates an analytics engineering dashboard for visualizing key economic indicators. It aims to provide up-to-date information on leading, lagging, and coincident economic indicators, reflecting the latest economic trends and data releases. 
+- The initiative involves the aggregation of data from various authoritative economic sources, focusing on the real-time update and visualization of these indicators.
+
 ### Objectives
-- To create a user-friendly platform that displays up-to-date economic indicators.
-- To assist users in making informed decisions by providing historical and current data visualizations.
-- To integrate real-time news feeds that relate to the displayed economic indicators.
-
-### Research Questions
-- How do various economic indicators evolve over time?
-- What are the relationships among different economic indicators?
-- How does the latest news correlate with changes in these indicators?
-
-## Data
+- Develop a platform that showcases updated economic indicators, making complex data accessible and interpretable.
+- Empower users with the ability to analyze trends in economic data through interactive visualizations.
 
 ### Data Sources
-- The data is sourced from multiple reliable financial and economic databases, including but not limited to:
-  - Federal Reserve Economic Data (FRED)
-  - U.S. Bureau of Labor Statistics
-  - U.S. Census Bureau
-- Real-time news articles are fetched using news feed APIs from established news outlets.
+- The data is sourced from several economic sources, (see Inidicators list above), although the data is pulled from two main sources:
+  - Federal Reserve Economic Data (FRED) API via the [fredapi](https://github.com/mortada/fredapi)
+  - Survey of Consumers, University of Michigan via the [Survey of Consumers](http://www.sca.isr.umich.edu/)
 
-### Data Attributes
-- Economic indicators include, but are not limited to:
-  - Total nonfarm payrolls
-  - Unemployment rate
-  - Inflation rate
-  - Consumer Price Index (CPI)
-  - Gross Domestic Product (GDP)
-- Each dataset includes attributes such as date, numerical values, and relevant descriptors.
 
 ## Architecture and Technologies
 
 ### Overview
-- This project employs a robust data pipeline that extracts, processes, and loads data into a PostgreSQL database, ensuring updated and clean data is always available.
+- This project employs a robust data pipeline that extracts, processes, and loads data into a streamlit web app and uses cron jobs to ensure updated and clean data is always available.
+- The updates are set to run daily at 11 AM EST, ensuring that the data is always up-to-date.
 
 ### Technologies
 - **Data Extraction and Loading**:
   - Python scripts for automated data extraction and loading.
   - Cron jobs for scheduling daily updates.
-- **Database**:
-  - PostgreSQL for data storage.
 - **Data Visualization**:
   - Plotly for creating interactive data visualizations.
 - **Web Application**:
   - Streamlit for building the interactive web application.
-- **Deployment**:
-  - GitHub for version control and deployment via Streamlit.
 
 ## Installation and Usage
 
 ### Prerequisites
 - Python 3.x
-- PostgreSQL
-- Access to economic data sources and news API.
+- Streamlit
+- FRED API Key
+- Other Python packages (see requirements.txt)
 
 ### Setup
 - Instructions on setting up the database, environment variables, and running the Python scripts.
@@ -96,7 +79,7 @@ Demo: https://pintoza-real-time-indicators-home-slo8fp.streamlit.app/
 
 ## License
 
-- Information about the project's license.
+- This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 
 Project Organization
