@@ -1,37 +1,23 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import psycopg2
-from dotenv import load_dotenv
 import os
-
-
-# Load environment variables
-load_dotenv()
-
-DB_HOST = os.getenv("DB_HOST")
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASSWORD")
-DB_NAME = os.getenv("DB_NAME")
-
-
-# Function to connect to the database
-def connect_to_db():
-    conn = psycopg2.connect(
-        host=DB_HOST,
-        user=DB_USER,
-        password=DB_PASS,
-        dbname=DB_NAME
-    )
-    return conn
 
 # Function to retrieve data for a specific indicator
 def get_indicator_data(indicator_name):
-    conn = connect_to_db()
-    query = f"SELECT * FROM {indicator_name};"  # Modify query as needed
-    df = pd.read_sql_query(query, conn)
-    conn.close()
-    return df
+    # Define the path to the processed data directory
+    processed_data_dir = '/Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/data/processed/coincident_indicators'
+
+    # Build the file path
+    file_path = os.path.join(processed_data_dir, f'{indicator_name}.csv')
+
+    # Read data from the corresponding CSV file
+    if os.path.exists(file_path):
+        df = pd.read_csv(file_path)
+        return df
+    else:
+        # Return an empty DataFrame if file does not exist
+        return pd.DataFrame()
 
 
 # Page configuration
@@ -64,7 +50,7 @@ formatting_rules = {
     "industrial_prod_index": "keep_same",
     "manufacture_trade_sales": "manufacture_trade_sales",
     "pi_exclude_transfers": "to_trillion",
-    "total_employees_nonfarm": "to_thousand",
+    "total_employees_nonfarm": "to_million",
 }
 
 def format_value(value, format_type):
@@ -77,7 +63,7 @@ def format_value(value, format_type):
     elif format_type == 'to_percentage':
         return f"{value}%"
     elif indicator == 'total_employees_nonfarm':
-        return f"{value / 1000:.0f}K"
+        return f"{value / 1000:.2f}M"
     elif format_type == 'keep_same':
         return value
     if indicator == 'manufacture_trade_sales':
