@@ -82,10 +82,6 @@ def get_y_axis_label(format_type):
         return 'Value (Millions)'
     elif format_type == 'to_percentage':
         return 'Percentage (%)'
-    elif indicator == 'total_employees_nonfarm':
-        return 'Value (Thousands)'
-    elif indicator == 'total_employees_nonfarm':
-        return f"{value / 1000:.0f}K"
     elif format_type == 'to_trillion':
         return 'Value (Trillions)'
     elif indicator == 'manufacture_trade_sales':
