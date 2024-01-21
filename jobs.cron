@@ -17,7 +17,6 @@
 45 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/extract/leading_indicators/manufacture_new_order_capital.py
 45 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/extract/leading_indicators/manufacturer_new_orders_consumer.py
 45 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/extract/leading_indicators/sp_500_index.py
-
 55 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/preprocessing/coincident_indicators/industrial_prod_index.py
 55 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/preprocessing/coincident_indicators/manufacture_trade_sales.py
 55 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/preprocessing/coincident_indicators/pi_exclude_transfers.py
@@ -37,23 +36,4 @@
 55 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/preprocessing/leading_indicators/manufacture_new_order_capital.py
 55 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/preprocessing/leading_indicators/manufacturer_new_orders_consumer.py
 55 10 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/preprocessing/leading_indicators/sp_500_index.py
-
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/coincident_indicators/industrial_prod_index.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/coincident_indicators/manufacture_trade_sales.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/coincident_indicators/pi_exclude_transfers.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/coincident_indicators/total_employees_nonfarm.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/lagging_indicators/avg_weeks_unemployment.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/lagging_indicators/bank_prime_loan.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/lagging_indicators/commercial_industrial_loans.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/lagging_indicators/consumer_credit_pi.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/lagging_indicators/cpi_all.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/lagging_indicators/manufacture_inventory_sales_ratio.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/lagging_indicators/unit_labor_costs_all.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/avg_consumer_expectations.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/avg_weekly_hours_manufacture.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/avg_weekly_initial_jobless_claims.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/building_permits.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/interest_rate_spread.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/manufacture_new_order_capital.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/manufacturer_new_orders_consumer.py
-0 11 * * * /usr/bin/python3 /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/src/data/load/leading_indicators/sp_500_index.py
+0 11 * * * /Users/pintoza/Desktop/dev/analytics-engineering/real-time-indicators/git_update.sh
